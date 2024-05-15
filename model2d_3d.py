@@ -332,7 +332,7 @@ class UNet3D_dual_up_hc(nn.Module):
         S = mu.clone()
         
         # relu for Topology Guarantee
-        for i in range(1,3):
+        for i in range(1,S.shape[1]):
             S[:,i,:, :] = torch.where(S[:, i,:, :]< S[:,i-1,:,:], S[:,i-1,:, :], S[:,i,:,:])
 
         return S, out, layerProb, mu, x_out, flow
@@ -422,7 +422,7 @@ class UNet3D_dual_up(nn.Module):
         S = mu.clone()
         
         # relu for Topology Guarantee
-        for i in range(1,3):
+        for i in range(1,S.shape[1]):
             S[:,i,:, :] = torch.where(S[:, i,:, :]< S[:,i-1,:,:], S[:,i-1,:, :], S[:,i,:,:])
         
         #print(flow.min(), flow.max())
@@ -518,7 +518,7 @@ class UNet3D_dual_up_lesion(nn.Module):
         S = mu.clone()
         
         # relu for Topology Guarantee
-        for i in range(1,3):
+        for i in range(1,S.shape[1]):
             S[:,i,:, :] = torch.where(S[:, i,:, :]< S[:,i-1,:,:], S[:,i-1,:, :], S[:,i,:,:])
         
         #print(flow.min(), flow.max())
